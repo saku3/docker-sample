@@ -16,6 +16,7 @@ RUN apt-get update && \
 RUN ln -s /usr/bin/python3.6 /usr/bin/python
 RUN rm -rf /usr/bin/python3 && ln -s /usr/bin/python3.6 /usr/bin/python3
 
-RUN pip3 install --upgrade pip && pip install flask && pip install uwsgi
+RUN pip3 install --upgrade pip && pip install flask && pip install uwsgi && \
+    pip install flask_sqlalchemy
 
 CMD ["uwsgi","--ini","/var/www/uwsgi.ini"]

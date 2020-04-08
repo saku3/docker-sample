@@ -6,6 +6,8 @@ services:
       - ./app:/var/www/
     ports:
       - '3031:3031'
+    depends_on:
+      - postgres-server
   nginx:
     build: ./nginx
     volumes:
@@ -14,3 +16,16 @@ services:
       - uwsgi
     ports:
       - '8080:80'
+  postgres-server:
+    build: ./postgres
+    expose:
+      - '5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./postgres/initdb:/docker-entrypoint-initdb.d
+      - database:/var/lib/postgresql/data
+volumes:
+  database:
+    driver: local
